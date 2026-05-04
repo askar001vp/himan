@@ -1574,6 +1574,15 @@
       btn.textContent = original;
       btn.style.background = '';
     }, 3000);
+    // Умная обработка телефона: на мобильных — звонок, на десктопе — WhatsApp
+(function() {
+  const isMobile = /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent);
+  if (isMobile) return; // на телефонах оставляем tel:
+  document.querySelectorAll('#navPhone, .footer-phone').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      window.open('https://wa.me/77075452500?text=Привет,Аскар!%20Интересует%20кунг%20для%20пикапа', '_blank');
+    });
   });
 </script>
 
