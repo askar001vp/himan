@@ -1568,18 +1568,54 @@
   document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
 
   // Form submit (демо)
-  document.getElementById('orderForm')?.addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type=submit]');
-    const original = btn.textContent;
+ // === Отправка заявок в Telegram ===
+const TG_TOKEN   = '8705053964:AAFjIJogCntIrmR6Py5-Vwgn78RCwpzlCRs'; // ← вставьте ваш токен
+const TG_CHAT_ID = '575990569';                                      // ← вставьте ваш chat_id
+document.getElementById('orderForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type=submit]');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Отправляем…';
+  const fd = new FormData(form);
+  const text =
+    `🆕 *Новая заявка с сайта Kungi.kz*\n\n` +
+    `👤 *Имя:* ${fd.get('name')}\n` +
+    `📞 *Телефон:* ${fd.get('phone')}\n` +
+    `🚙 *Модель:* ${fd.get('model')}\n` +
+    `📦 *Комплектация:* ${fd.get('package')}\n` +
+    `📝 *Дополнительно:* ${fd.get('msg') || '—'}\n\n` +
+    `🕐 ${new Date().toLocaleString('ru-RU')}`;
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text,
+        parse_mode: 'Markdown'
+      })
+    });
+    if (!res.ok) throw new Error('Ошибка отправки');
     btn.textContent = 'Заявка отправлена ✓';
     btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
     setTimeout(() => {
-      e.target.reset();
+      form.reset();
       btn.textContent = original;
       btn.style.background = '';
+      btn.disabled = false;
     }, 3000);
-  });
+  } catch (err) {
+    btn.textContent = 'Ошибка, позвоните нам';
+    btn.style.background = '#dc2626';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 4000);
+  }
+});
 
   // Умная обработка телефона: на мобильных — звонок, на десктопе — WhatsApp
   (function() {
