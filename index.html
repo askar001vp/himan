@@ -1014,7 +1014,16 @@
   .features-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
 }
-  
+ .socials a.whatsapp-icon {
+  color: #25D366;
+  border-color: rgba(37, 211, 102, 0.3);
+}
+.socials a.whatsapp-icon:hover {
+  color: #128c7e;
+  border-color: #25D366;
+  background: rgba(37, 211, 102, 0.1);
+  transform: scale(1.1);
+} 
 </style>
 </head>
 <body>
@@ -1423,17 +1432,7 @@
           <a href="#" aria-label="Instagram">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
-          .whatsapp-icon {
-    color: #25D366; /* Зеленый цвет */
-    font-size: 30px; /* Размер */
-    transition: transform 0.2s; /* Анимация при наведении */
-}
-
-.whatsapp-icon:hover {
-    transform: scale(1.1); /* Увеличение при наведении */
-    color: #128c7e; /* Темно-зеленый при наведении */
-}
-          <a href="https://wa.me/77075452500?text=Здравствуйте!%20Интересует%20кунг%20для%20пикапа" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <a href="https://wa.me/77075452500?text=Здравствуйте!%20Интересует%20кунг%20для%20пикапа" target="_blank" rel="noopener" aria-label="WhatsApp" class="whatsapp-icon">
         </div>
       </div>
 
